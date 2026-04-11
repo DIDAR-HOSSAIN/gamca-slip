@@ -1,0 +1,25 @@
+{
+    "menus": [
+        {
+            "id": "1",
+            "title": "Home",
+            "path": "/"
+        },
+        {
+            "id": "2",
+            "title": "Services",
+            "path": "/services",
+            "dropdown": []
+        },
+        {
+            "id": "5",
+            "title": "About",
+            "path": "/about"
+        },
+        {
+            "id": "6",
+            "title": "Contact",
+            "path": "/contacts/create"
+        }
+    ]
+}
