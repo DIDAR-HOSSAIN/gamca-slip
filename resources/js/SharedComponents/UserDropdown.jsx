@@ -1,65 +1,111 @@
-import { Link } from '@inertiajs/react';
-import React, { useState } from 'react';
-import avatar from '@/assets/images/avatar.jpg';
+import { Link } from "@inertiajs/react";
+import React, { useState, useRef, useEffect } from "react";
+import avatar from "@/assets/images/avatar.jpg";
 
 const UserDropdown = ({ user }) => {
-    const [isEndHovered, setIsEndHovered] = useState(false);
+    const [open, setOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
-    const handleEndMenuHover = () => {
-        setIsEndHovered(true);
-    };
+    // Close on outside click
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setOpen(false);
+            }
+        };
 
-    const handleEndMenuLeave = () => {
-        setIsEndHovered(false);
-    };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
-        <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-            onMouseEnter={handleEndMenuHover}
-            onMouseLeave={handleEndMenuLeave}
-        >
-            <div className="w-10 rounded-full">
+        <div className="relative" ref={dropdownRef}>
+            {/* Avatar Button */}
+            <button
+                onClick={() => setOpen(!open)}
+                className="flex items-center focus:outline-none"
+            >
                 <img
-                    alt="Tailwind CSS Navbar component"
                     src={avatar}
+                    alt="User"
+                    className="w-10 h-10 rounded-full border-2 border-white shadow hover:scale-105 transition"
                 />
-            </div>
-            {isEndHovered && (
-                <ul className="menu menu-sm dropdown-content absolute top-full right-0 z-[1] p-2 shadow bg-base-100 w-52">
-                    {user ? (
-                        <>
-                            <li>
-                                <Link href={route("dashboard")}>Dashboard</Link>
-                            </li>
-                            <li>
-                                <Link href={route("profile.edit")}>
-                                    Profile
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={route("register")}>Register</Link>
-                            </li>
+            </button>
+
+            {/* Dropdown */}
+            {open && (
+                <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-lg border text-gray-700 z-50 overflow-hidden animate-fadeIn">
+                    {/* User Info */}
+                    {user && (
+                        <div className="px-4 py-3 border-b bg-gray-50">
+                            <p className="text-sm font-semibold">{user.name}</p>
+                            <p className="text-xs text-gray-500">
+                                {user.email}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Menu */}
+                    <ul className="py-2 text-sm">
+                        {user ? (
+                            <>
+                                <li>
+                                    <Link
+                                        href={route("dashboard")}
+                                        className="block px-4 py-2 hover:bg-gray-100"
+                                    >
+                                        📊 Dashboard
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link
+                                        href={route("profile.edit")}
+                                        className="block px-4 py-2 hover:bg-gray-100"
+                                    >
+                                        👤 Profile
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link
+                                        href={route("register")}
+                                        className="block px-4 py-2 hover:bg-gray-100"
+                                    >
+                                        ➕ Register
+                                    </Link>
+                                </li>
+
+                                <li className="border-t my-1"></li>
+
+                                <li>
+                                    <Link
+                                        href={route("logout")}
+                                        method="post"
+                                        as="button"
+                                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                                    >
+                                        🚪 Logout
+                                    </Link>
+                                </li>
+                            </>
+                        ) : (
                             <li>
                                 <Link
-                                    href={route("logout")}
-                                    method="post"
-                                    as="button"
+                                    href={route("login")}
+                                    className="block px-4 py-2 hover:bg-gray-100"
                                 >
-                                    Log Out
+                                    🔐 Login
                                 </Link>
                             </li>
-                        </>
-                    ) : (
-                        <>
-                            <li>
-                                <Link href={route("login")}>Log in</Link>
-                            </li>
-                        </>
-                    )}
-                </ul>
+                        )}
+                    </ul>
+                </div>
             )}
         </div>
     );

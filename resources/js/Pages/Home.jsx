@@ -2,6 +2,7 @@ import React from "react";
 import FrontendLayout from "@/frontend/Layout/FrontendLayout";
 import { Head } from "@inertiajs/react";
 import HomeSearch from "@/frontend/ui/HomeSearch";
+import LandPage from "@/frontend/ui/LandPage";
 
 const Home = ({ auth, results }) => {
     return (
@@ -15,7 +16,8 @@ const Home = ({ auth, results }) => {
         >
             <Head title="Home" />
 
-            <HomeSearch results={results} />
+            {/* <HomeSearch results={results} /> */}
+            <LandPage />
 
             {/* <Carousel />
             <OurNetworkService />
