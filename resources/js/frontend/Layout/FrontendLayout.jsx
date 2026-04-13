@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FloatingWhatsApp from "@/frontend/ui/FloatingWhatsApp";
 
 const FrontendLayout = ({ user, children }) => {
     return (
@@ -8,6 +9,7 @@ const FrontendLayout = ({ user, children }) => {
             <Navbar user={user} />
             {children}
             <Footer />
+            <FloatingWhatsApp />
         </div>
     );
 };

@@ -1,114 +1,167 @@
 import axiosApi from "@/axios/axios";
 import React, { useState } from "react";
+import {
+    FaMapMarkerAlt,
+    FaEnvelope,
+    FaPhone,
+    FaClock,
+    FaWhatsapp,
+    FaCheckCircle,
+} from "react-icons/fa";
 
 const Contact = () => {
-
     const [successMessage, setSuccessMessage] = useState("");
 
     const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const phone = form.phone.value;
-    const inquiry = form.inquiry.value;
+        event.preventDefault();
+        const form = event.target;
 
-    try {
-        const response = await axiosApi.post("/contacts", {
-            name,
-            email,
-            phone,
-            inquiry,
-        });
+        const name = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const inquiry = form.inquiry.value;
 
-        setSuccessMessage("Data added successfully.");
-        form.reset(); // Reset the form fields
-        setTimeout(() => {
-            setSuccessMessage("");
-        }, 5000);
-    } catch (error) {
-        console.error("Something went wrong:", error);
-    }
-};
+        try {
+            await axiosApi.post("/contacts", {
+                name,
+                email,
+                phone,
+                inquiry,
+            });
 
+            setSuccessMessage("Message sent successfully!");
+            form.reset();
 
+            setTimeout(() => setSuccessMessage(""), 4000);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
-        <>
-            <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 place-items-center">
-                {/* Left column */}
-                <div className="text-center lg:text-left">
-                    <h1 className="text-4xl font-bold text-center text-blue-600/100 my-8">
-                        Why Choose Our IT Services?
+        <section className="bg-gradient-to-b from-gray-50 to-white py-24">
+            <div className="max-w-7xl mx-auto px-4">
+                {/* TITLE */}
+                <div className="text-center mb-14">
+                    <h1 className="text-4xl font-bold text-gray-800 mb-3">
+                        Get In Touch
                     </h1>
-                    <h2 className="text-3xl font-bold">Grow your business</h2>
-                    <p className="mt-4">
-                        Focus on scalling and expanding your business, while we
-                        take care of your IT needs and network requirments.
-                    </p>
-
-                    <h2 className="text-3xl font-bold mt-4">
-                        Streamline Processes
-                    </h2>
-                    <p className="mt-4">
-                        Increase productivity and performance of your
-                        organization when you have a dedicated IT support team
-                        by your side.
-                    </p>
-
-                    <h2 className="text-3xl font-bold mt-4">
-                        Empowering your people
-                    </h2>
-                    <p className="mt-4">
-                        Allow your employees to do more and focus on their jobs,
-                        without being held back by tech issues and concerns.
+                    <p className="text-gray-500">
+                        We are ready to help you anytime — send message or
+                        contact via WhatsApp
                     </p>
                 </div>
 
-                {/* Right column */}
-                <div className="mt-4 lg:mt-0 w-full">
-                    <h1 className="text-4xl font-bold text-center text-blue-600/100 my-8">
-                        Contact Us
-                    </h1>
-                    {successMessage && (
-                        <p className="text-2xl bg-red-500 text-white text-center">{successMessage}</p>
-                    )}
-                    <form onSubmit={handleSubmit} className="bg-gray-100 p-6">
-                        {/* Your form inputs go here */}
+                <div className="grid lg:grid-cols-2 gap-12">
+                    {/* LEFT SIDE */}
+                    <div className="space-y-6">
+                        <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 h-full text-center">
+                            {/* TITLE */}
+                            <h2 className="text-2xl font-bold text-gray-800 mb-8">
+                                Contact Information
+                            </h2>
 
-                        <input
-                            className="w-full mb-4 p-2 rounded-md"
-                            name="name"
-                            type="text"
-                            placeholder="Full Name"
-                        />
-                        <div className="flex flex-col lg:flex-row lg:gap-4">
-                            <input
-                                className="w-full lg:w-1/2 mb-4 p-2 rounded-md"
-                                name="email"
-                                type="email"
-                                placeholder="Email"
-                            />
-                            <input
-                                className="w-full lg:w-1/2 mb-4 p-2 rounded-md"
-                                name="phone"
-                                type="text"
-                                placeholder="Phone Number"
-                            />
+                            {/* ADDRESS BLOCK */}
+                            <div className="space-y-6 text-gray-600 text-sm">
+                                <div>
+                                    <p className="font-semibold text-gray-700 mb-1">
+                                        Office Address
+                                    </p>
+                                    <p>
+                                        953, O.R Nizam Road, Panchlaish,
+                                        Chattogram
+                                    </p>
+                                </div>
+
+                                <div className="border-t border-gray-200"></div>
+
+                                <div>
+                                    <p className="font-semibold text-gray-700 mb-1">
+                                        Email
+                                    </p>
+                                    <p className="break-all">
+                                        didarhossain018@gmail.com
+                                    </p>
+                                </div>
+
+                                <div className="border-t border-gray-200"></div>
+
+                                <div>
+                                    <p className="font-semibold text-gray-700 mb-1">
+                                        Phone
+                                    </p>
+                                    <p>01812894971</p>
+                                </div>
+
+                                <div className="border-t border-gray-200"></div>
+
+                                <div>
+                                    <p className="font-semibold text-gray-700 mb-1">
+                                        Working Hours
+                                    </p>
+                                    <p>Sat - Thu: 9:00 AM - 10:00 PM</p>
+                                </div>
+                            </div>
                         </div>
-                        <textarea
-                            className="w-full mb-4 p-2 rounded-md"
-                            rows="4"
-                            name="inquiry"
-                            placeholder="What is your inquiry about?"
-                        ></textarea>
-                        <button className="bg-blue-500 text-white py-2 px-4 w-full rounded-md hover:bg-blue-600">
-                            Submit
-                        </button>
-                    </form>
+                    </div>
+
+                    {/* RIGHT SIDE FORM */}
+                    <div>
+                        {successMessage && (
+                            <div className="bg-green-100 text-green-700 text-center p-3 rounded-lg mb-6 font-medium">
+                                {successMessage}
+                            </div>
+                        )}
+
+                        <form
+                            onSubmit={handleSubmit}
+                            className="bg-white p-8 rounded-2xl shadow-md space-y-5"
+                        >
+                            <input
+                                name="name"
+                                type="text"
+                                placeholder="Your Full Name"
+                                required
+                                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                            />
+
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <input
+                                    name="email"
+                                    type="email"
+                                    placeholder="Email Address"
+                                    required
+                                    className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                                />
+
+                                <input
+                                    name="phone"
+                                    type="text"
+                                    placeholder="Phone Number"
+                                    required
+                                    className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                                />
+                            </div>
+
+                            <textarea
+                                name="inquiry"
+                                rows="6"
+                                placeholder="Write your message..."
+                                required
+                                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                            />
+
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </>
+        </section>
     );
 };
 

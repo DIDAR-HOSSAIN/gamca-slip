@@ -29,7 +29,7 @@ const Navbar = ({ user }) => {
                         <Link href="/" className="flex items-center gap-2">
                             <img src={logo} className="h-10 lg:h-12" />
                             <span className="hidden sm:block text-lg font-semibold tracking-wide">
-                                GAMCA
+                                GAMCA SLIP CENTRE
                             </span>
                         </Link>
                     </div>
@@ -74,12 +74,12 @@ const Navbar = ({ user }) => {
 
                     {/* MOBILE HOTLINE CENTER */}
                     <div className="lg:hidden absolute left-1/2 -translate-x-1/2 text-center leading-tight">
-                        <a href="tel:01767774027" className="group">
+                        <a href="tel:01812894971" className="group">
                             <div className="text-[12px] text-white tracking-wide">
                                 Hotline
                             </div>
                             <div className="text-md font-semibold group-hover:underline">
-                                01767774027
+                                01812894971
                             </div>
                         </a>
                     </div>
@@ -88,7 +88,7 @@ const Navbar = ({ user }) => {
                     <div className="navbar-end items-center gap-3">
                         {/* Desktop Hotline (Professional CTA) */}
                         <a
-                            href="tel:01767774027"
+                            href="tel:01812894971"
                             className="hidden lg:flex items-center gap-2 px-4 py-2 transition group"
                         >
                             <PhoneIcon className="h-8 w-8 text-white" />
@@ -98,7 +98,7 @@ const Navbar = ({ user }) => {
                                     Hotline
                                 </span>
                                 <span className="text-lg font-semibold tracking-wide">
-                                    01767774027
+                                    01812894971
                                 </span>
                             </div>
                         </a>

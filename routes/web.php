@@ -50,9 +50,18 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::post('/dope/search', [HomeController::class, 'index'])->name('dope.search');
+Route::get('/services', function () {
+    return Inertia::render('Services');
+})->name('services');
+
+Route::get('/about', function () {
+    return Inertia::render('About');
+})->name('about');
 
 Route::get('contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+
+Route::post('/dope/search', [HomeController::class, 'index'])->name('dope.search');
+
 Route::resource('contacts', ContactController::class)->middleware(['auth', 'verified'])->except('create');
 
 //Super admin route
