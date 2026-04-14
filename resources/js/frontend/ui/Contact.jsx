@@ -1,13 +1,4 @@
-import axiosApi from "@/axios/axios";
 import React, { useState } from "react";
-import {
-    FaMapMarkerAlt,
-    FaEnvelope,
-    FaPhone,
-    FaClock,
-    FaWhatsapp,
-    FaCheckCircle,
-} from "react-icons/fa";
 
 const Contact = () => {
     const [successMessage, setSuccessMessage] = useState("");
