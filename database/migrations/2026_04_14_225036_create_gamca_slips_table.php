@@ -22,24 +22,30 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->date('dob');
-            $table->string('nationality');
-            $table->string('gender');
+            $table->string('nationality')->default('Bangladeshi');
+            $table->enum('gender', ['Male', 'Female', 'Other'])->default('Male');
             $table->string('marital_status');
 
             $table->string('passport_number');
             $table->date('passport_issue_date');
-            $table->string('passport_issue_place');
+            $table->string('passport_issue_place')->default('Dhaka');
             $table->date('passport_expiry_date');
 
             $table->string('visa_type');
 
             $table->string('email');
             $table->string('phone');
-            $table->string('national_id')->nullable();
+            $table->string('nid')->nullable();
             $table->string('position_applied')->nullable();
 
             // File Upload
-            $table->string('passport_file')->nullable();
+            $table->string('passport_image')->nullable();
+
+            //Payment
+            $table->string('payment_id')->nullable();
+            $table->string('trx_id')->nullable();
+            $table->decimal('amount', 10, 2)->default(1500);
+            $table->string('payment_status')->default('pending'); // pending, success, failed
             $table->timestamps();
         });
     }

@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\GamcaSlip;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Http;
 
 class GamcaSlipController extends Controller
 {
@@ -20,7 +26,7 @@ class GamcaSlipController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Gamca/GamcaSlip/CreateGamcaSlip');
     }
 
     /**
@@ -28,7 +34,87 @@ class GamcaSlipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // ✅ Validation
+        $data = $request->validate([
+            'country'                => 'required|string|max:100',
+            'city'                   => 'required|string|max:100',
+            'travel_country'         => 'required|string|max:100',
+
+            'first_name'             => 'required|string|max:100',
+            'last_name'              => 'required|string|max:100',
+            'dob'                    => 'required|date',
+            'nationality'            => 'required|string|max:100',
+            'gender'                 => 'required|in:Male,Female,Other',
+            'marital_status'         => 'required|string|max:50',
+
+            'passport_number'        => 'required|string|max:50',
+            'passport_issue_date'    => 'required|date',
+            'passport_issue_place'   => 'required|string|max:100',
+            'passport_expiry_date'   => 'required|date',
+
+            'visa_type'              => 'required|string|max:50',
+
+            'email'                  => 'required|email',
+            'phone'                  => 'required|string|max:20',
+
+            'nid'                    => 'nullable|string|max:50',
+            'position_applied'       => 'nullable|string|max:100',
+
+            'passport_image' => [
+                'required',
+                'file',
+                'mimes:jpeg,png,jpg,pdf',
+                'max:10240' // 10MB
+            ],
+        ]);
+
+        // ✅ User (optional)
+        if (Auth::check()) {
+            $data['user_id'] = Auth::id();
+        }
+
+        // ✅ Confirm Passport Check
+        if ($request->passport_number !== $request->confirm_passport) {
+            return back()->withErrors([
+                'passport_number' => 'Passport number does not match!'
+            ]);
+        }
+
+        // ✅ Upload Folder
+        $path = public_path('uploads/passports/');
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
+        }
+
+        // ✅ Image Manager
+        $manager = new ImageManager(new Driver());
+
+        // ✅ File Upload
+        if ($request->hasFile('passport_image')) {
+
+            $file = $request->file('passport_image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            // Image হলে resize
+            if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])) {
+                $img = $manager->read($file->getRealPath())->resize(600, 400);
+                $img->save($path . $filename, 80);
+            } else {
+                $file->move($path, $filename);
+            }
+
+            $data['passport_image'] = $filename;
+        }
+
+        // ✅ Payment Default
+        $data['amount'] = 1500;
+        $data['payment_status'] = 'pending';
+
+        // ✅ Save Data
+        $slip = GamcaSlip::create($data);
+
+        // ✅ Redirect to bKash Payment Page
+        return redirect()->route('bkash.pay', $slip->id);
     }
 
     /**
@@ -62,4 +148,86 @@ class GamcaSlipController extends Controller
     {
         //
     }
+
+    // 🔹 Step 1: Pay
+    public function pay($id)
+    {
+        $slip = GamcaSlip::findOrFail($id);
+
+        // Step 1: Get Token
+        $tokenResponse = Http::withHeaders([
+            'username' => env('BKASH_USERNAME'),
+            'password' => env('BKASH_PASSWORD'),
+        ])->post(env('BKASH_BASE_URL') . '/token/grant', [
+            'app_key' => env('BKASH_APP_KEY'),
+            'app_secret' => env('BKASH_APP_SECRET'),
+        ]);
+
+        $tokenData = $tokenResponse->json();
+
+        if (!isset($tokenData['id_token'])) {
+            return back()->with('error', 'bKash token failed');
+        }
+
+        $idToken = $tokenData['id_token'];
+
+        // Step 2: Create Payment
+        $paymentResponse = Http::withHeaders([
+            'Authorization' => $idToken,
+            'X-APP-Key' => env('BKASH_APP_KEY'),
+        ])->post(env('BKASH_BASE_URL') . '/create', [
+            'mode' => '0011',
+            'payerReference' => 'user_' . $slip->id,
+            'callbackURL' => route('bkash.callback'),
+            'amount' => $slip->amount,
+            'currency' => 'BDT',
+            'intent' => 'sale',
+            'merchantInvoiceNumber' => 'INV-' . $slip->id,
+        ]);
+
+        $paymentData = $paymentResponse->json();
+
+        if (isset($paymentData['bkashURL'])) {
+            // Save payment ID
+            $slip->update([
+                'payment_id' => $paymentData['paymentID']
+            ]);
+
+            return redirect($paymentData['bkashURL']);
+        }
+
+        return back()->with('error', 'Payment create failed');
+    }
+
+    // 🔹 Step 3: Callback
+    public function callback(Request $request)
+    {
+        if ($request->status == 'success') {
+
+            // Step 4: Execute Payment
+            $executeResponse = Http::withHeaders([
+                'Authorization' => session('bkash_token'),
+                'X-APP-Key' => env('BKASH_APP_KEY'),
+            ])->post(env('BKASH_BASE_URL') . '/execute', [
+                'paymentID' => $request->paymentID
+            ]);
+
+            $executeData = $executeResponse->json();
+
+            if (isset($executeData['trxID'])) {
+
+                $slip = GamcaSlip::where('payment_id', $request->paymentID)->first();
+
+                $slip->update([
+                    'trx_id' => $executeData['trxID'],
+                    'payment_status' => 'success'
+                ]);
+
+                return redirect('/success');
+            }
+        }
+
+        return redirect('/failed');
+    }
+
 }

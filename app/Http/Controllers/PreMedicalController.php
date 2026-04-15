@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\PreMedical;
-use App\Http\Requests\StorePreMedicalRequest;
-use App\Http\Requests\UpdatePreMedicalRequest;
 use App\Models\Agency;
 use App\Models\Country;
 use Carbon\Carbon;

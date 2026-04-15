@@ -26,8 +26,12 @@ class GamcaSlip extends Model
         'visa_type',
         'email',
         'phone',
-        'national_id',
+        'nid',
         'position_applied',
-        'passport_file',
+        'passport_image',
+        'payment_id',
+        'trx_id',
+        'amount',
+        'payment_status'
     ];
 }

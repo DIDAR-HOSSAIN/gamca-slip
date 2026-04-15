@@ -26,7 +26,6 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->enum('sex', ['MALE', 'FEMALE', 'OTHER'])->default('MALE');
             $table->string('nationality')->default('BANGLADESHI');
-            $table->string('religion');
             $table->enum('religion', ['Islam','Hinduism','Christianity','Sikh','Buddhism','Others','N/A'])->default('Islam');
             $table->string('profession');
             $table->date('report_date')->nullable();
