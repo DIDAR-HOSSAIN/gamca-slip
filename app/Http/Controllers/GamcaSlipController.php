@@ -41,13 +41,14 @@ class GamcaSlipController extends Controller
             'travel_country'         => 'required|string|max:100',
 
             'first_name'             => 'required|string|max:100',
-            'last_name'              => 'required|string|max:100',
+            'last_name'              => 'nullable|string|max:100',
             'dob'                    => 'required|date',
             'nationality'            => 'required|string|max:100',
             'gender'                 => 'required|in:Male,Female,Other',
             'marital_status'         => 'required|string|max:50',
 
-            'passport_number'        => 'required|string|max:50',
+            // 'passport_number'        => 'required|string|max:50',
+            'passport_number' => ['required', 'regex:/^[A-Z]{1}[0-9]{8}$/'],
             'passport_issue_date'    => 'required|date',
             'passport_issue_place'   => 'required|string|max:100',
             'passport_expiry_date'   => 'required|date',
@@ -57,7 +58,7 @@ class GamcaSlipController extends Controller
             'email'                  => 'required|email',
             'phone'                  => 'required|string|max:20',
 
-            'nid'                    => 'nullable|string|max:50',
+            'nid'                    => 'required|string|max:50',
             'position_applied'       => 'nullable|string|max:100',
 
             'passport_image' => [
@@ -66,6 +67,8 @@ class GamcaSlipController extends Controller
                 'mimes:jpeg,png,jpg,pdf',
                 'max:10240' // 10MB
             ],
+
+            'trx_id'                    => 'required|string|max:50',
         ]);
 
         // ✅ User (optional)
@@ -229,5 +232,4 @@ class GamcaSlipController extends Controller
 
         return redirect('/failed');
     }
-
 }
