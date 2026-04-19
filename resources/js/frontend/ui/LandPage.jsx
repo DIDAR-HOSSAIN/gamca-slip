@@ -1,6 +1,6 @@
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
-import CreateMedical from "@/Pages/Gamca/GamcaSlip/CreateGamcaSlip";
+import LandingPage from "./test";
 
 export default function LandPage() {
 
@@ -16,6 +16,8 @@ export default function LandPage() {
                     <h1 className="text-3xl lg:text-5xl font-bold mb-4 text-gray-800">
                         GAMCA Medical Slip Service
                     </h1>
+
+                    <LandingPage />
 
                     {/* <p className="text-lg text-gray-600 mb-4">
                         We help you book your WAFID medical appointment easily &

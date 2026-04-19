@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
 import FrontendLayout from "@/frontend/Layout/FrontendLayout";
+import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 
 const CreateGamcaSlip = () => {
     const [matchMessage, setMatchMessage] = useState("");
@@ -477,7 +478,9 @@ const CreateGamcaSlip = () => {
                                     <option>Electrician</option>
                                     <option>Engineer</option>
                                     <option>General Secretory</option>
-                                    <option>Health &amp; Medicine &amp; Nursing</option>
+                                    <option>
+                                        Health &amp; Medicine &amp; Nursing
+                                    </option>
                                     <option>Heavy Driver</option>
                                     <option>IT &amp; Internet Engineer</option>
                                     <option>Leisure &amp; Tourism</option>
@@ -549,7 +552,10 @@ const CreateGamcaSlip = () => {
                                     <option>Service</option>
                                     <option>Studio CAD Designer</option>
                                     <option>Financial Analyst</option>
-                                    <option> Cabin Appearance (AIR LINES)</option>
+                                    <option>
+                                        {" "}
+                                        Cabin Appearance (AIR LINES)
+                                    </option>
                                     <option>Car Washer</option>
                                     <option>Surveyor</option>
                                     <option>Electrical Technician</option>
@@ -584,7 +590,7 @@ const CreateGamcaSlip = () => {
 
                             <div className="">
                                 <label className={labelStyle}>
-                                    Upload Passport
+                                    Upload Passport (jpg, jpeg, png, pdf)
                                 </label>
                                 <input
                                     // name="passport_image"
@@ -604,8 +610,8 @@ const CreateGamcaSlip = () => {
                                     </p>
                                 )}
                                 <p className="text-xs text-red-500 mt-1">
-                                    Please upload a clear image of your
-                                    passport. Max file size: 10 MB
+                                    upload a clear image of your passport. Max
+                                    file size: 10 MB
                                 </p>
                             </div>
 
@@ -627,7 +633,60 @@ const CreateGamcaSlip = () => {
                                 )}
                             </div>
 
+                            {/* TERMS CHECKBOX */}
+                            <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                                <label className="flex items-center gap-2 text-md cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={data.agree}
+                                        onChange={(e) =>
+                                            setData("agree", e.target.checked)
+                                        }
+                                        className="accent-blue-600"
+                                    />
+                                    <FaCheckCircle className="text-green-500 text-sm" />
+                                    <span className="leading-none">
+                                        By submitting this form you agree with
+                                        the{" "}
+                                        <a
+                                            href="/terms"
+                                            className="text-blue-600 underline"
+                                        >
+                                            Terms & Conditions
+                                        </a>
+                                    </span>
+                                    <p className="flex items-center gap-2 text-red-500 text-md">
+                                        <FaExclamationTriangle />
+                                        সাবমিট করার পূর্বে সকল তথ্য যাচাই করে
+                                        নিন।
+                                    </p>
+                                </label>
+
+                                {errors.agree && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.agree}
+                                    </p>
+                                )}
+                            </div>
+
                             {/* SUBMIT */}
+                            <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                                <button
+                                    disabled={processing || !data.agree}
+                                    className={`w-full py-3 rounded-lg font-semibold transition text-white
+                                    ${
+                                        data.agree
+                                            ? "bg-blue-700 hover:bg-blue-800"
+                                            : "bg-gray-400 cursor-not-allowed"
+                                    }`}
+                                >
+                                    {processing
+                                        ? "Processing..."
+                                        : "Submit & Pay"}
+                                </button>
+                            </div>
+
+                            {/* SUBMIT
                             <div className="col-span-1 sm:col-span-2 lg:col-span-3">
                                 <button
                                     disabled={processing}
@@ -637,7 +696,7 @@ const CreateGamcaSlip = () => {
                                         ? "Processing..."
                                         : "Submit & Pay"}
                                 </button>
-                            </div>
+                            </div> */}
                         </form>
                     </div>
                 </div>
