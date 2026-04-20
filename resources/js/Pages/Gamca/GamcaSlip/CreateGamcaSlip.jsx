@@ -644,7 +644,7 @@ const CreateGamcaSlip = () => {
                                         }
                                         className="accent-blue-600"
                                     />
-                                    <FaCheckCircle className="text-green-500 text-sm" />
+                                    <FaCheckCircle className="text-green-500 text-md" />
                                     <span className="leading-none">
                                         By submitting this form you agree with
                                         the{" "}
@@ -656,9 +656,9 @@ const CreateGamcaSlip = () => {
                                         </a>
                                     </span>
                                     <p className="flex items-center gap-2 text-red-500 text-md">
-                                        <FaExclamationTriangle />
+                                        <FaExclamationTriangle className="text-md" />
                                         সাবমিট করার পূর্বে সকল তথ্য যাচাই করে
-                                        নিন।
+                                        নিন এবং বিকাশ পেমেন্ট নিশ্চিত করুন।
                                     </p>
                                 </label>
 

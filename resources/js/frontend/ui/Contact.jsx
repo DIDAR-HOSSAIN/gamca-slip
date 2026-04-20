@@ -48,50 +48,23 @@ const Contact = () => {
                     <div className="space-y-6">
                         <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 h-full text-center">
                             {/* TITLE */}
-                            <h2 className="text-2xl font-bold text-gray-800 mb-8">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-8 underline">
                                 Contact Information
                             </h2>
 
                             {/* ADDRESS BLOCK */}
                             <div className="space-y-6 text-gray-600 text-sm">
-                                <div>
-                                    <p className="font-semibold text-gray-700 mb-1">
-                                        Office Address
-                                    </p>
+                                <section className="py-16 px-4 text-center text-lg">
+                                    <h2 className="text-2xl font-bold mb-4">
+                                        যোগাযোগ
+                                    </h2>
                                     <p>
-                                        953, O.R Nizam Road, Panchlaish,
+                                        📍 953, O.R Nizam Road, Panchlaish,
                                         Chattogram
                                     </p>
-                                </div>
-
-                                <div className="border-t border-gray-200"></div>
-
-                                <div>
-                                    <p className="font-semibold text-gray-700 mb-1">
-                                        Email
-                                    </p>
-                                    <p className="break-all">
-                                        didarhossain018@gmail.com
-                                    </p>
-                                </div>
-
-                                <div className="border-t border-gray-200"></div>
-
-                                <div>
-                                    <p className="font-semibold text-gray-700 mb-1">
-                                        Phone
-                                    </p>
-                                    <p>01812894971</p>
-                                </div>
-
-                                <div className="border-t border-gray-200"></div>
-
-                                <div>
-                                    <p className="font-semibold text-gray-700 mb-1">
-                                        Working Hours
-                                    </p>
-                                    <p>Sat - Thu: 9:00 AM - 10:00 PM</p>
-                                </div>
+                                    <p>📧 didarhossain018@gmail.com</p>
+                                    <p>📞 01812894971</p>
+                                </section>
                             </div>
                         </div>
                     </div>

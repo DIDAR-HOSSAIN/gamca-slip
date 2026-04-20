@@ -1,8 +1,8 @@
 import React from "react";
 import FrontendLayout from "@/frontend/Layout/FrontendLayout";
 import { Head } from "@inertiajs/react";
-import LandPage from "@/frontend/ui/LandPage";
 import FloatingWhatsApp from "@/frontend/ui/FloatingWhatsApp";
+import LandingPage from "@/frontend/ui/LandingPage";
 
 const Home = ({ auth, results }) => {
     return (
@@ -17,7 +17,7 @@ const Home = ({ auth, results }) => {
             <Head title="Home" />
 
             {/* <HomeSearch results={results} /> */}
-            <LandPage />
+            <LandingPage />
             <FloatingWhatsApp />
         </FrontendLayout>
     );
