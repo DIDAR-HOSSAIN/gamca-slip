@@ -1,7 +1,15 @@
 import React from "react";
-import { FaWhatsapp, FaShieldAlt, FaBolt, FaCheckCircle } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 
 const LandingPage = () => {
+    const phone = "8801812894971";
+    const message =
+        "Assalamu Alaikum ! GAMCA / WAFID Medical Slip সার্ভিসে আপনাকে স্বাগতম। আপনার আবেদন দ্রুত প্রসেস করার জন্য নিচের তথ্যগুলো পাঠান। নাম, গন্তব্য দেশ, মোবাইল নাম্বার, ও পাসপোর্টের ক্লিয়ার ছবি সংযুক্ত করুন। আমাদের টিম খুব শীঘ্রই আপনাকে সহায়তা করবে। ধন্যবাদ।";
+
+    const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(
+        message.trim(),
+    )}`;
+
     return (
         <div className="font-[Inter] bg-gradient-to-b from-slate-50 to-white text-gray-800">
             <section className="bg-gradient-to-r from-blue-50 via-white to-blue-50 py-16 px-4">
@@ -86,9 +94,8 @@ const LandingPage = () => {
                             📄 এখনই আবেদন করুন
                         </a>
 
-                        {/* WhatsApp CTA */}
                         <a
-                            href="https://wa.me/01812894971?text=আস্সালামু%20আলাইকুম%20😊%0A%0Aগামকা%20মেডিকেল%20স্লিপের%20জন্য%20আমি%20সাহায্য%20চাই।"
+                            href={whatsappLink}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-2 bg-green-500 text-white px-7 py-3 rounded-xl font-semibold hover:bg-green-600 transition shadow-md"
@@ -293,7 +300,7 @@ const LandingPage = () => {
                     <p className="text-gray-600 leading-relaxed mb-5">
                         এই ওয়েবসাইটটি WAFID / GAMCA বা GCC এর কোনো অফিসিয়াল
                         ওয়েবসাইট নয়। আমরা একটি স্বাধীন সার্ভিস প্রোভাইডার হিসেবে
-                        কাজ করি, যারা মধ্যপ্রাচ্যে গমন ইচ্ছুক যাত্রীদের মেডিকেল
+                        কাজ করি, মধ্যপ্রাচ্যে গমন ইচ্ছুক যাত্রীদের, মেডিকেল
                         স্লিপ প্রসেসিং-এ সহায়তা করে থাকি।
                     </p>
 
