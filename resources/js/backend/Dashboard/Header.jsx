@@ -48,7 +48,6 @@ const Header = ({user, isOpen, toggleSidebar }) => {
                     <div className="mr-4">
                         <UserDropdown user={user} />
                     </div>
-                    <div>{user?.name}</div>
                 </div>
             </nav>
         </div>

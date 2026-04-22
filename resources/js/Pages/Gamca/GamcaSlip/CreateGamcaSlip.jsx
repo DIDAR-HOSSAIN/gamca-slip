@@ -574,20 +574,6 @@ const CreateGamcaSlip = () => {
                                 )}
                             </div>
 
-                            {/* <div>
-                                <label className={labelStyle}>Position</label>
-                                <input
-                                    value={data.position_applied}
-                                    onChange={(e) =>
-                                        setData(
-                                            "position_applied",
-                                            e.target.value,
-                                        )
-                                    }
-                                    className={inputStyle}
-                                />
-                            </div> */}
-
                             <div className="">
                                 <label className={labelStyle}>
                                     Upload Passport (jpg, jpeg, png, pdf)
@@ -685,18 +671,6 @@ const CreateGamcaSlip = () => {
                                         : "Submit & Pay"}
                                 </button>
                             </div>
-
-                            {/* SUBMIT
-                            <div className="col-span-1 sm:col-span-2 lg:col-span-3">
-                                <button
-                                    disabled={processing}
-                                    className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-lg font-semibold transition"
-                                >
-                                    {processing
-                                        ? "Processing..."
-                                        : "Submit & Pay"}
-                                </button>
-                            </div> */}
                         </form>
                     </div>
                 </div>

@@ -18,7 +18,13 @@ class GamcaSlipController extends Controller
      */
     public function index()
     {
-        //
+        $gamcaSlips = GamcaSlip::orderBy('id', 'desc')->get();
+
+        return inertia('Gamca/GamcaSlip/ViewGamcaSlip', [
+            'auth' => ['user' => auth()->user()],
+            'gamcaSlips' => $gamcaSlips,
+            'flash' => session()->get('flash'),
+        ]);
     }
 
     /**
@@ -149,7 +155,8 @@ class GamcaSlipController extends Controller
      */
     public function destroy(GamcaSlip $gamcaSlip)
     {
-        //
+        $gamcaSlip->delete();
+        return redirect()->route('gamca-slip.index')->with('success', '✅ Slip Deleted successfully.');
     }
 
     // 🔹 Step 1: Pay
