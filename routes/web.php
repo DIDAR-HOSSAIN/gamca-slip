@@ -43,11 +43,9 @@ Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
 
-Route::get('contacts/create', [ContactController::class, 'create'])->name('contacts.create');
-
 Route::post('/dope/search', [HomeController::class, 'index'])->name('dope.search');
 
-Route::resource('contacts', ContactController::class)->middleware(['auth', 'verified'])->except('create');
+Route::resource('contacts', ContactController::class);
 
 //Super admin route
 Route::middleware(['auth', 'check_user_status', 'check_roles:super-admin'])->group(function () {
@@ -99,15 +97,6 @@ Route::middleware(['auth', 'check_user_status', 'check_roles:super-admin, admin,
 });
 
 Route::resource('gamca-slip', GamcaSlipController::class);
-Route::get('/bkash/pay/{id}', [GamcaSlipController::class, 'pay'])->name('bkash.pay');
-Route::get('/bkash/callback', [GamcaSlipController::class, 'callback'])->name('bkash.callback');
-Route::get('/success', function () {
-    return "Payment Successful ✅";
-});
-
-Route::get('/failed', function () {
-    return "Payment Failed ❌";
-});
 
 //General route
 Route::middleware(['auth', 'check_roles:super-admin, admin, sub-admin, user, general'])->group(function () {

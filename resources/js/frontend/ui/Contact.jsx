@@ -1,32 +1,31 @@
 import React, { useState } from "react";
+import { useForm } from "@inertiajs/react";
 
 const Contact = () => {
     const [successMessage, setSuccessMessage] = useState("");
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const form = event.target;
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: "",
+        email: "",
+        phone: "",
+        inquiry: "",
+    });
 
-        const name = form.name.value;
-        const email = form.email.value;
-        const phone = form.phone.value;
-        const inquiry = form.inquiry.value;
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-        try {
-            await axiosApi.post("/contacts", {
-                name,
-                email,
-                phone,
-                inquiry,
-            });
+        post("/contacts", {
+            preserveScroll: true,
 
-            setSuccessMessage("Message sent successfully!");
-            form.reset();
+            onSuccess: () => {
+                setSuccessMessage("Message sent successfully!");
+                reset();
 
-            setTimeout(() => setSuccessMessage(""), 4000);
-        } catch (error) {
-            console.error(error);
-        }
+                setTimeout(() => {
+                    setSuccessMessage("");
+                }, 4000);
+            },
+        });
     };
 
     return (
@@ -37,42 +36,30 @@ const Contact = () => {
                     <h1 className="text-4xl font-bold text-gray-800 mb-3">
                         Get In Touch
                     </h1>
+
                     <p className="text-gray-500">
-                        We are ready to help you anytime — send message or
-                        contact via WhatsApp
+                        We are ready to help you anytime
                     </p>
                 </div>
 
                 <div className="grid lg:grid-cols-2 gap-12">
-                    {/* LEFT SIDE */}
-                    <div className="space-y-6">
-                        <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 h-full text-center">
-                            {/* TITLE */}
-                            <h2 className="text-2xl font-bold text-gray-800 mb-8 underline">
-                                Contact Information
-                            </h2>
+                    {/* LEFT */}
+                    <div className="bg-white p-8 rounded-2xl shadow-md border text-center">
+                        <h2 className="text-2xl font-bold mb-6">যোগাযোগ</h2>
 
-                            {/* ADDRESS BLOCK */}
-                            <div className="space-y-6 text-gray-600 text-sm">
-                                <section className="py-16 px-4 text-center text-lg">
-                                    <h2 className="text-2xl font-bold mb-4">
-                                        যোগাযোগ
-                                    </h2>
-                                    <p>
-                                        📍 953, O.R Nizam Road, Panchlaish,
-                                        Chattogram
-                                    </p>
-                                    <p>📧 didarhossain018@gmail.com</p>
-                                    <p>📞 01812894971</p>
-                                </section>
-                            </div>
+                        <div className="space-y-4 text-gray-600">
+                            <p>
+                                📍 953, O.R Nizam Road, Panchlaish, Chattogram
+                            </p>
+                            <p>📧 didarhossain018@gmail.com</p>
+                            <p>📞 01812894971</p>
                         </div>
                     </div>
 
-                    {/* RIGHT SIDE FORM */}
+                    {/* RIGHT */}
                     <div>
                         {successMessage && (
-                            <div className="bg-green-100 text-green-700 text-center p-3 rounded-lg mb-6 font-medium">
+                            <div className="mb-5 bg-green-100 text-green-700 p-3 rounded-lg text-center">
                                 {successMessage}
                             </div>
                         )}
@@ -81,45 +68,90 @@ const Contact = () => {
                             onSubmit={handleSubmit}
                             className="bg-white p-8 rounded-2xl shadow-md space-y-5"
                         >
-                            <input
-                                name="name"
-                                type="text"
-                                placeholder="Your Full Name"
-                                required
-                                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
-
-                            <div className="grid md:grid-cols-2 gap-4">
+                            {/* Name */}
+                            <div>
                                 <input
-                                    name="email"
-                                    type="email"
-                                    placeholder="Email Address"
-                                    required
-                                    className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                                />
-
-                                <input
-                                    name="phone"
                                     type="text"
-                                    placeholder="Phone Number"
-                                    required
-                                    className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    placeholder="Your Full Name"
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
+                                    className="w-full border rounded-lg p-3"
                                 />
+
+                                {errors.name && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.name}
+                                    </p>
+                                )}
                             </div>
 
-                            <textarea
-                                name="inquiry"
-                                rows="6"
-                                placeholder="Write your message..."
-                                required
-                                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                            />
+                            {/* Email + Phone */}
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <input
+                                        type="email"
+                                        placeholder="Email Address"
+                                        value={data.email}
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                        className="w-full border rounded-lg p-3"
+                                    />
 
+                                    {errors.email && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.email}
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="Phone Number"
+                                        value={data.phone}
+                                        onChange={(e) =>
+                                            setData("phone", e.target.value)
+                                        }
+                                        className="w-full border rounded-lg p-3"
+                                    />
+
+                                    {errors.phone && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.phone}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Message */}
+                            <div>
+                                <textarea
+                                    rows="6"
+                                    placeholder="Write your message..."
+                                    value={data.inquiry}
+                                    onChange={(e) =>
+                                        setData("inquiry", e.target.value)
+                                    }
+                                    className="w-full border rounded-lg p-3"
+                                />
+
+                                {errors.inquiry && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.inquiry}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Submit */}
                             <button
+                                disabled={processing}
                                 type="submit"
-                                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
                             >
-                                Send Message
+                                {processing ? "Sending..." : "Send Message"}
                             </button>
                         </form>
                     </div>

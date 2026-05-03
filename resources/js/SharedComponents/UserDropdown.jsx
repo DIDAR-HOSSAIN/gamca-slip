@@ -6,7 +6,6 @@ const UserDropdown = ({ user }) => {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
 
-    // close outside click
     useEffect(() => {
         const handleClick = (e) => {
             if (ref.current && !ref.current.contains(e.target)) {
@@ -23,12 +22,11 @@ const UserDropdown = ({ user }) => {
             {/* BUTTON */}
             <button
                 onClick={() => setOpen(!open)}
-                className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10 transition"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg
+                           hover:bg-white/15 transition"
             >
-                {/* Icon */}
                 <UserCircleIcon className="h-7 w-7 text-white" />
-                
-                {/* Dropdown Arrow */}
+
                 <svg
                     className={`w-4 h-4 text-white transition-transform ${
                         open ? "rotate-180" : ""
@@ -44,10 +42,10 @@ const UserDropdown = ({ user }) => {
 
             {/* DROPDOWN */}
             {open && (
-                <div className="absolute right-0 mt-3 w-52 bg-white rounded-xl shadow-lg border overflow-hidden z-50">
+                <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
                     {/* USER INFO */}
-                    <div className="px-4 py-3 bg-gray-50 border-b">
-                        <p className="text-sm font-semibold">
+                    <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-white border-b">
+                        <p className="text-sm font-semibold text-gray-800">
                             {user?.name ?? "Guest"}
                         </p>
                         <p className="text-xs text-gray-500">
@@ -55,30 +53,29 @@ const UserDropdown = ({ user }) => {
                         </p>
                     </div>
 
-                    {/* ========================= */}
-                    {/* CONDITIONAL MENU RULE */}
-                    {/* ========================= */}
-
+                    {/* LOGGED IN */}
                     {user ? (
                         <>
-                            {/* LOGGED IN MENU */}
                             <Link
                                 href="/dashboard"
-                                className="block px-4 py-2 text-sm hover:bg-gray-100"
+                                className="block px-4 py-2 text-sm text-gray-700
+                                           hover:bg-blue-50 hover:text-blue-700 transition"
                             >
                                 Dashboard
                             </Link>
 
                             <Link
                                 href="/profile"
-                                className="block px-4 py-2 text-sm hover:bg-gray-100"
+                                className="block px-4 py-2 text-sm text-gray-700
+                                           hover:bg-blue-50 hover:text-blue-700 transition"
                             >
                                 Profile
                             </Link>
 
                             <Link
                                 href="/settings"
-                                className="block px-4 py-2 text-sm hover:bg-gray-100"
+                                className="block px-4 py-2 text-sm text-gray-700
+                                           hover:bg-blue-50 hover:text-blue-700 transition"
                             >
                                 Settings
                             </Link>
@@ -87,17 +84,19 @@ const UserDropdown = ({ user }) => {
                                 href="/logout"
                                 method="post"
                                 as="button"
-                                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                                className="w-full text-left px-4 py-2 text-sm
+                                           text-red-600 hover:bg-red-50 transition font-medium"
                             >
                                 Logout
                             </Link>
                         </>
                     ) : (
                         <>
-                            {/* LOGGED OUT MENU → ONLY LOGIN */}
+                            {/* LOGGED OUT */}
                             <Link
                                 href="/login"
-                                className="block px-4 py-2 text-sm hover:bg-gray-100 text-blue-600 font-medium"
+                                className="block px-4 py-2 text-sm font-semibold
+                                           text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition"
                             >
                                 Login
                             </Link>
