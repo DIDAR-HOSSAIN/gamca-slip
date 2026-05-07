@@ -51,8 +51,8 @@ const Contact = () => {
                             <p>
                                 📍 953, O.R Nizam Road, Panchlaish, Chattogram
                             </p>
-                            <p>📧 didarhossain018@gmail.com</p>
-                            <p>📞 01812894971</p>
+                            <p>📧 doctorsorgbd@gmail.com</p>
+                            <p>📞 01767774027</p>
                         </div>
                     </div>
 

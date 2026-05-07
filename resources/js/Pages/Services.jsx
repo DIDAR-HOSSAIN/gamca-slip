@@ -12,7 +12,7 @@ import {
 
 export default function Service() {
 
-    const phone = "8801812894971";
+    const phone = "8801767774027";
     const message =
         "Assalamu Alaikum ! GAMCA / WAFID Medical Slip সার্ভিসে আপনাকে স্বাগতম। আপনার আবেদন দ্রুত প্রসেস করার জন্য নিচের তথ্যগুলো পাঠান। নাম, গন্তব্য দেশ, মোবাইল নাম্বার, ও পাসপোর্টের ক্লিয়ার ছবি সংযুক্ত করুন। আমাদের টিম খুব শীঘ্রই আপনাকে সহায়তা করবে। ধন্যবাদ।";
 
@@ -220,7 +220,7 @@ export default function Service() {
                         </a>
 
                         <a
-                            href="tel:01812894971"
+                            href="tel:01767774027"
                             className="bg-green-500 px-6 py-3 rounded-lg font-semibold"
                         >
                             Call Now
