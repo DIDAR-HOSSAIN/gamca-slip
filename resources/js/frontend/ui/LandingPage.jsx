@@ -27,7 +27,7 @@ const LandingPage = () => {
             {/* HERO SECTION */}
             <section className="text-center px-4 bg-gradient-to-r from-blue-50 to-white">
                 <h1 className="text-4xl md:text-3xl font-extrabold tracking-tight mb-4 text-blue-400">
-                    বিদেশ যত্রীদের মেডিকেল রেজিস্ট্রেশন সিস্টেম
+                    বিদেশ যাত্রীদের মেডিকেল রেজিস্ট্রেশন সিস্টেম
                 </h1>
 
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">

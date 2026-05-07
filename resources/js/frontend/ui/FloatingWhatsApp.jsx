@@ -20,7 +20,7 @@ export default function FloatingWhatsApp() {
 
             {/* Text */}
             <span className="hidden sm:inline font-medium">
-                WhatsApp Support
+                Need Help? Chat with us
             </span>
 
             {/* Pulse Animation */}

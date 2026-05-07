@@ -43,6 +43,10 @@ Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
 
+Route::get('/terms', function () {
+    return Inertia::render('Gamca/GamcaSlip/TermsCondition');
+})->name('');
+
 Route::post('/dope/search', [HomeController::class, 'index'])->name('dope.search');
 
 Route::resource('contacts', ContactController::class);

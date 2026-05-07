@@ -28,7 +28,7 @@ const CreateGamcaSlip = () => {
         passport_image: null,
         trx_id: "",
     });
-
+console.log('data gamca slip', data);
     const handlePassportChange = (value, type) => {
         const val = value.toUpperCase().trim();
 
@@ -641,10 +641,17 @@ const CreateGamcaSlip = () => {
                                             Terms & Conditions
                                         </a>
                                     </span>
-                                    <p className="flex items-center gap-2 text-red-500 text-md">
-                                        <FaExclamationTriangle className="text-md" />
-                                        সাবমিট করার পূর্বে সকল তথ্য যাচাই করে
-                                        নিন এবং বিকাশ পেমেন্ট নিশ্চিত করুন।
+                                    <p className="flex items-center gap-2 text-md text-red-500">
+                                        <FaExclamationTriangle className="text-md shrink-0" />
+
+                                        <span>
+                                            সাবমিট করার পূর্বে সকল তথ্য যাচাই
+                                            করে নিন এবং{" "}
+                                            <span className="font-bold text-blue-600">
+                                                01812894971
+                                            </span>{" "}
+                                            নম্বরে বিকাশ (পার্সোনাল) পেমেন্ট নিশ্চিত করুন।
+                                        </span>
                                     </p>
                                 </label>
 

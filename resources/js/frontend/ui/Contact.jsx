@@ -49,7 +49,7 @@ const Contact = () => {
 
                         <div className="space-y-4 text-gray-600">
                             <p>
-                                📍 953, O.R Nizam Road, Panchlaish, Chattogram
+                                📍 O.R Nizam Road, Panchlaish, Chattogram
                             </p>
                             <p>📧 doctorsorgbd@gmail.com</p>
                             <p>📞 01767774027</p>
