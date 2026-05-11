@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
 import FrontendLayout from "@/frontend/Layout/FrontendLayout";
 import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const CreateGamcaSlip = () => {
     const [matchMessage, setMatchMessage] = useState("");
@@ -28,7 +29,7 @@ const CreateGamcaSlip = () => {
         passport_image: null,
         trx_id: "",
     });
-console.log('data gamca slip', data);
+    console.log("data gamca slip", data);
     const handlePassportChange = (value, type) => {
         const val = value.toUpperCase().trim();
 
@@ -53,15 +54,49 @@ console.log('data gamca slip', data);
         }
     };
 
-    const submit = (e) => {
-        e.preventDefault();
-        post(route("gamca-slip.store"), {
-            forceFormData: true,
-            onSuccess: () => {
-                reset();
-            },
-        });
-    };
+    // const submit = (e) => {
+    //     e.preventDefault();
+    //     post(route("gamca-slip.store"), {
+    //         forceFormData: true,
+    //         onSuccess: () => {
+    //             reset();
+    //         },
+    //     });
+    // };
+
+
+   // --- Submit Form ---
+   const submit = (e) => {
+       e.preventDefault();
+
+       post(route("gamca-slip.store"), {
+           forceFormData: true,
+
+           onSuccess: (page) => {
+               reset();
+               setMatchMessage("");
+
+               Swal.fire({
+                   title: "✅ Success!",
+                   text:
+                       page.props.flash?.success ||
+                       "Thank you! Your application has been submitted successfully.",
+                   icon: "success",
+                   confirmButtonText: "OK",
+               });
+           },
+
+           onError: () => {
+               Swal.fire({
+                   title: "❌ Error!",
+                   text: "Submission failed. Please check your form inputs.",
+                   icon: "error",
+                   confirmButtonText: "OK",
+               });
+           },
+       });
+   };
+
     // reusable input style
     const inputStyle =
         "w-full border border-gray-300 rounded-lg px-3 py-2 text-md focus:ring-2 focus:ring-blue-500 outline-none";
@@ -650,7 +685,8 @@ console.log('data gamca slip', data);
                                             <span className="font-bold text-blue-600">
                                                 01812894971
                                             </span>{" "}
-                                            নম্বরে বিকাশ (পার্সোনাল) পেমেন্ট নিশ্চিত করুন।
+                                            নম্বরে বিকাশ (পার্সোনাল) পেমেন্ট
+                                            নিশ্চিত করুন।
                                         </span>
                                     </p>
                                 </label>
@@ -684,6 +720,6 @@ console.log('data gamca slip', data);
             </section>
         </FrontendLayout>
     );
-};
+};;
 
 export default CreateGamcaSlip;

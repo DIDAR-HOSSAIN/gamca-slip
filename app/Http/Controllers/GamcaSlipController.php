@@ -75,7 +75,11 @@ class GamcaSlipController extends Controller
             ],
 
             'trx_id'                    => 'required|string|max:50',
+            // checkbox validation
+            'agree' => 'required|accepted',
         ]);
+
+        unset($data['agree']);
 
         // ✅ User (optional)
         if (Auth::check()) {
@@ -120,10 +124,13 @@ class GamcaSlipController extends Controller
         $data['payment_status'] = 'pending';
 
         // ✅ Save Data
-        $slip = GamcaSlip::create($data);
+        GamcaSlip::create($data);
 
         // ✅ Redirect to bKash Payment Page
-        return redirect()->route('bkash.pay', $slip->id);
+        return back()->with(
+            'success',
+            'Thank you! Your application has been submitted successfully.'
+        );
     }
 
     /**
